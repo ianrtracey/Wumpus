@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
@@ -7,30 +8,56 @@ public class Map {
 	final int XSIZE = 10;
 	final int YSIZE = 10;
 	
-	char[][] matrix;
+	Object[][] matrix;
 	Wumpus wumpus;
-	SlimePit slimePits;
-	Player hunter;
+	ArrayList<SlimePit> slimePits;
+	Hunter hunter;
 	
-	public Map(Wumpus wumpus, SlimePit slimePits, Player hunter) {
-		matrix = new char[XSIZE][YSIZE];
-		this.wumpus    = wumpus;
-		this.slimePits = slimePits;
-		this.hunter    = hunter;
+	public Map(Wumpus wumpus, ArrayList<SlimePit> slimePits, Hunter hunter) {
+		this.matrix    = new Object[XSIZE][YSIZE];
+		
+		placeInRandomPosition(wumpus);
+		
+		for(SlimePit slimepit: slimePits) {
+		  placeInRandomPosition(slimepit);
+		}
+		
+		placeInRandomPosition(hunter);
+		
 		
 	}
 	
 	private void placeInRandomPosition(Object obj) {
 		Random random = new Random();
-		int randomX = random.nextInt((10-1)+1)+1;
-		int randomY = random.nextInt((10-1)+1)+1;
+		int randomX   = random.nextInt((10-1)+1);
+		int randomY   = random.nextInt((10-1)+1);
+		matrix[randomX][randomY] = obj;
+		System.out.println("Placed: " + obj.getClass() + " in " + randomX + " " +randomY);
 	} 
 	
-	private char generateObjectCode(Object obj) {
-		if(obj instanceof Wumpus){return 'w'; }
-		if(obj instanceof Player){return 'O'; }
-		if(obj instanceof SlimePit){return 'S'; }
+	public char objectSymbol(Object obj) {
+		if(obj instanceof Wumpus){return 'W'; }
+		if(obj instanceof Hunter){return 'O'; }
+		if(obj instanceof SlimePit){return 'P'; }
+		if(obj instanceof Slime){return 'S'; }
+		if(obj instanceof Goop){return 'G'; }
+		if(obj instanceof Blood){return 'B'; }
 		return 'i';
+	}
+	
+	public String toString() {
+		String mapAsString = "";
+		for(int r = 0; r < XSIZE; r++) {
+			for(int c = 0; c < YSIZE; c++) {
+				if (matrix[r][c] != null) {
+					mapAsString += "[" + objectSymbol(matrix[r][c]) + "] ";
+				} else {
+					mapAsString += "[ ] ";
+				}
+			}
+			mapAsString += "\n";
+		}
+		return mapAsString;
 	}
 	
 	// randomly generate Wumpus
