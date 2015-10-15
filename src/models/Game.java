@@ -35,7 +35,8 @@ public class Game {
 	private ArrayList<SlimePit> generateSlimePits() {
 		if (slimePits.isEmpty()) {
 			Random r = new Random();
-			int numOfSlimePits = r.nextInt((6-3)+3);
+			int numOfSlimePits = r.nextInt((5-3)+1)+3;
+			System.out.println("number " + numOfSlimePits);
 			for(int i = 0; i < numOfSlimePits; i++ ){
 				slimePits.add(new SlimePit());
 			}
