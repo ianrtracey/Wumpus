@@ -1,4 +1,4 @@
-package View;
+package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -26,20 +26,13 @@ public class GraphicsView extends JPanel implements Observer{
 	private Image IMG_CLOUDS;
 	private Image IMG_LEST; // <------ DELETE THIS BEFORE SUBMIT
 	
-	// TEMP REPRESENTATION - NEED TO GET THE BOARD STATUS (THE UPDATED MAP)
-	private char [][] TEMP_MATRIX = { 	{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', },
-										{ 'X', 'X', 'X', 'X', 'S', 'X', 'X', 'X', 'X', 'X', },
-										{ 'X', 'X', 'X', 'S', 'P', 'S', 'X', 'B', 'X', 'X', },
-										{ 'X', 'X', 'X', 'X', 'S', 'X', 'X', 'B', 'X', 'X', },
-										{ 'X', 'X', 'X', 'S', 'X', 'B', 'B', 'W', 'B', 'B', },
-										{ 'X', 'X', 'S', 'P', 'S', 'S', 'X', 'B', 'X', 'X', },
-										{ 'X', 'X', 'X', 'S', 'S', 'P', 'S', 'B', 'X', 'X', },
-										{ 'X', 'X', 'X', 'X', 'X', 'S', 'S', 'X', 'X', 'X', },
-										{ 'X', 'O', 'X', 'X', 'X', 'S', 'P', 'S', 'X', 'S', },
-										{ 'X', 'X', 'X', 'X', 'X', 'X', 'S', 'X', 'S', 'P', }
-									};
+	Map gameMap;
+	Object[][] gameState;
+	
 
-	public GraphicsView(){
+	public GraphicsView(Map theMap){
+		this.gameMap = theMap;
+		this.gameState = gameMap.getMatrix();
 		this.loadImages();
 	} // Ends Constructor
 
@@ -71,18 +64,18 @@ public class GraphicsView extends JPanel implements Observer{
 	      for (int r = 0; r < 500; r += 50){
 	    	  
 	    	  // Ground / Hidden Clouds layer first
-	    	  if(TEMP_MATRIX[curRow][curCol] == 'X'){g2.drawImage(IMG_CLOUDS, r, c, null);}
+	    	  if(gameMap.objectSymbol(gameState[curRow][curCol]) == 'X'){g2.drawImage(IMG_CLOUDS, r, c, null);}
 	    	  else                                  {g2.drawImage(IMG_GROUND, r, c, null);}
 	    	  
 	    	  // Then Environment layer
-	    	  if(TEMP_MATRIX[curRow][curCol] == 'S'){g2.drawImage(IMG_SLIME, r, c, null);}
-	    	  if(TEMP_MATRIX[curRow][curCol] == 'B'){g2.drawImage(IMG_BLOOD, r, c, null);}
-	    	  if(TEMP_MATRIX[curRow][curCol] == 'G'){g2.drawImage(IMG_GOOP,  r, c, null);}
-	    	  if(TEMP_MATRIX[curRow][curCol] == 'P'){g2.drawImage(IMG_PIT,   r, c, null);}
+	    	  if(gameMap.objectSymbol(gameState[curRow][curCol]) == 'S'){g2.drawImage(IMG_SLIME, r, c, null);}
+	    	  if(gameMap.objectSymbol(gameState[curRow][curCol]) == 'B'){g2.drawImage(IMG_BLOOD, r, c, null);}
+	    	  if(gameMap.objectSymbol(gameState[curRow][curCol]) == 'G'){g2.drawImage(IMG_GOOP,  r, c, null);}
+	    	  if(gameMap.objectSymbol(gameState[curRow][curCol]) == 'P'){g2.drawImage(IMG_PIT,   r, c, null);}
 	    	  
 	    	  // Finally: Actors	    	  
-	    	  if(TEMP_MATRIX[curRow][curCol] == 'O'){g2.drawImage(IMG_PLAYER, r, c, null);}
-	    	  if(TEMP_MATRIX[curRow][curCol] == 'W'){g2.drawImage(IMG_LEST  , r, c, null);} //   <------ MCCANN EASTER EGG - DELETE THIS BEFORE SUBMIT
+	    	  if(gameMap.objectSymbol(gameState[curRow][curCol]) == 'O'){g2.drawImage(IMG_PLAYER, r, c, null);}
+	    	  if(gameMap.objectSymbol(gameState[curRow][curCol]) == 'W'){g2.drawImage(IMG_LEST  , r, c, null);} //   <------ MCCANN EASTER EGG - DELETE THIS BEFORE SUBMIT
 	    	  //if(TEMP_MATRIX[curRow][curCol] == 'W'){g2.drawImage(IMG_WUMPUS, r, c, null);} // <------ THIS IS THE REAL ONE
 	    	  curCol++;
 	      }
