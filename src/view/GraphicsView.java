@@ -1,15 +1,20 @@
-package view;
+package View;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class GraphicsView extends JPanel{
+import models.Map;
+
+public class GraphicsView extends JPanel implements Observer{
 	// using a IMG prefix and caps here like pretend constants just because...
 	private Image IMG_GOOP;
 	private Image IMG_BLOOD;
@@ -84,4 +89,10 @@ public class GraphicsView extends JPanel{
 	    curRow++;
 	  }
 	} // Ends Method paintComponent
+
+	@Override
+	public void update(Observable o, Object arg) {
+		this.repaint();
+		
+	}
 } // Ends Class GraphicsView

@@ -1,9 +1,11 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
-public class Map {
+public class Map extends Observable {
 	
 	final int XSIZE = 10;
 	final int YSIZE = 10;
@@ -203,6 +205,8 @@ public class Map {
 	
 	public void place(Object object, int x, int y) {
 		matrix[x][y] = object;
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	public String toString() {
@@ -222,6 +226,7 @@ public class Map {
 		}
 		return mapAsString;
 	}
+
 	
 	// randomly generate Wumpus
 	// 3-5 bottomless slime pits

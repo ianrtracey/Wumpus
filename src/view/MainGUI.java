@@ -1,9 +1,11 @@
-package view;
+package View;
 import java.awt.BorderLayout;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -21,7 +23,7 @@ import models.*;
 import java.awt.Font;
 
 
-public class MainGUI {
+public class MainGUI implements Observer {
 	
 	Game game;
 	
@@ -144,7 +146,7 @@ public class MainGUI {
 		myTextArea.setForeground(Color.WHITE);
 		myTextArea.setText(game.getMap().toString() );
 		
-		myGraphicsView = new GraphicsView();
+		myGraphicsView = new GraphicsView(game.getMap());
 
 		// Add in the game status text panel
 		
@@ -209,6 +211,12 @@ public class MainGUI {
 		fireDownButton.addActionListener(blFactory.createDownFireArrowListener());
 		
 				
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		myTextArea.setText(game.getMap().toString());
+		
 	}
 	
 
