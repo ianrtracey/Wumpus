@@ -4,6 +4,7 @@ package models;
 public class Hunter {
 	
 	int positionX, positionY;
+	Arrow arrow;
 	
 	public Hunter() {}
 	
@@ -11,6 +12,7 @@ public class Hunter {
 		
 		this.positionX = x;
 		this.positionY = y;
+		this.arrow = new Arrow();
 	}
 	
 	public int getPositionX() {
@@ -20,5 +22,15 @@ public class Hunter {
 	public int getPositionY() {
 		return positionY;
 	}
+	
+	public boolean fire() {
+		if (arrow != null) {
+			this.arrow = null;
+			return true;
+		}
+		return false;
+	}
+	
+	
 
 }
