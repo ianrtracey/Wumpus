@@ -3,8 +3,10 @@ package models;
 public class Room {
 	
 	boolean isVisited;
+	Object contents;
 	
-	public Room() {
+	public Room(Object object) {
+		this.contents = object;
 		this.isVisited = false;
 	}
 	
@@ -15,5 +17,11 @@ public class Room {
 	public boolean isVisited() {
 		return this.isVisited;
 	}
+	
+	public Object getContents() {
+		return contents;
+	}
+	
+	
 
 }

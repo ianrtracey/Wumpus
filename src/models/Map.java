@@ -10,13 +10,13 @@ public class Map extends Observable {
 	final int XSIZE = 10;
 	final int YSIZE = 10;
 	
-	Object[][] matrix;
+	Room[][] matrix;
 	
 	Wumpus wumpus;
 	Hunter hunter;
 	
 	public Map(Wumpus wumpus, ArrayList<SlimePit> slimePits, Hunter hunter) {
-		this.matrix    = new Object[XSIZE][YSIZE];
+		this.matrix    = new Room[XSIZE][YSIZE];
 		
 		this.wumpus = wumpus;
 		this.hunter = hunter;
@@ -28,7 +28,7 @@ public class Map extends Observable {
 	}
 	
 	public Map() {
-		this.matrix    = new Object[XSIZE][YSIZE];
+		this.matrix    = new Room[XSIZE][YSIZE];
 	}
 	
 	public int getXSize() {
@@ -50,7 +50,7 @@ public class Map extends Observable {
 	}
 	
 	public void placeWumpus(Wumpus wumpus, int x, int y) {
-		matrix[x][y] = wumpus;
+		matrix[x][y] = new Room(wumpus);
 		int[] wumpusPosition = {x,y};
 		placeBlood(wumpusPosition);
 	}
@@ -60,16 +60,16 @@ public class Map extends Observable {
 		while ( matrix[position[0]][position[1]] != null) {
 			position = getRandomPosition();
 		}
-		matrix[position[0]][position[1]] = hunter;
+		matrix[position[0]][position[1]] = new Room(hunter);
 		hunter.setPosition(position[0], position[1]);
 	}
 	
 	public void placeHunter(Hunter hunter, int x, int y) {
-		matrix[x][y] = hunter;
+		matrix[x][y] = new Room(hunter);
 	}
 	
 	public void placeSlime(ArrayList<SlimePit> slimePit, int x, int y) {
-		matrix[x][y] = slimePit;
+		matrix[x][y] = new Room(slimePit);
 		int[] slimePitPosition = {x,y};
 		placeSlime(slimePitPosition);
 	}
@@ -82,7 +82,7 @@ public class Map extends Observable {
 	}
 	
 	public void placeSlimePit(SlimePit slimepit, int x, int y) {
-		matrix[x][y] = slimepit;
+		matrix[x][y] = new Room(slimepit);
 		int[] slimePitPosition = {x,y};
 		placeSlime(slimePitPosition);
 	}
@@ -106,10 +106,10 @@ public class Map extends Observable {
 	}
 	
 	private void placeSlimeOrGoop(int x, int y) {
-		if ( matrix[x][y] instanceof Blood ) {
-			matrix[x][y] = new Goop();
+		if (matrix[x][y].getContents() != null && matrix[x][y].getContents() instanceof Blood ) {
+			matrix[x][y] = new Room(new Goop());
 		} else {
-			matrix[x][y] = new Slime();
+			matrix[x][y] = new Room(new Slime());
 		}
 	}
 	
@@ -119,14 +119,14 @@ public class Map extends Observable {
 		int k = 0;
 		
 		while(x < XSIZE-1 && k < 2) {
-			matrix[++x][y] = new Blood();
+			matrix[++x][y] = new Room(new Blood());
 			k++;
 		}
 		k = 0;
 		x = wumpusPosition[0];
 		
 		while(0 < x && k < 2) {
-			matrix[--x][y] = new Blood();
+			matrix[--x][y] = new Room(new Blood());
 			k++;
 		}
 		
@@ -134,7 +134,7 @@ public class Map extends Observable {
 		x = wumpusPosition[0];
 		
 		while(y < YSIZE-1 && k < 2) {
-			matrix[x][++y] = new Blood();
+			matrix[x][++y] = new Room( new Blood());
 			k++;
 		}
 		
@@ -142,7 +142,7 @@ public class Map extends Observable {
 		y = wumpusPosition[1];
 		
 		while(0 < y && k < 2) {
-			matrix[x][--y] = new Blood();
+			matrix[x][--y] = new Room(new Blood());
 			k++;
 		}
 	}
@@ -151,7 +151,7 @@ public class Map extends Observable {
 		for(int r = 0; r < XSIZE; r++) {
 			for(int c = 0; c < YSIZE; c++) {
 				if (matrix[r][c] == null) {
-					matrix[r][c] = new Room();
+					matrix[r][c] = new Room(null);
 				}
 			}
 		}
@@ -159,7 +159,7 @@ public class Map extends Observable {
 	
 	private int[] placeInRandomPosition(Object obj) {
 		int[] coordinates = getRandomPosition();
-		matrix[coordinates[0]][coordinates[1]] = obj;
+		matrix[coordinates[0]][coordinates[1]] = new Room(obj);
 		
 		//System.out.println("Placed: " + obj.getClass() + " in " + coordinates[0] + " " + coordinates[1]);
 		return coordinates;
@@ -189,7 +189,9 @@ public class Map extends Observable {
 	}
 	
 	private char getRoomObjectSymbol(Room room) {
-		if (room.isVisited) {
+		if (room.isVisited && room.getContents() != null) {
+			return objectSymbol(room.getContents());
+		} else if (room.isVisited) {
 			return 'v';
 		}
 		return 'X';
@@ -204,7 +206,7 @@ public class Map extends Observable {
 	}
 	
 	public void place(Object object, int x, int y) {
-		matrix[x][y] = object;
+		matrix[x][y] = new Room(object);
 		setChanged();
 		notifyObservers(this);
 	}
