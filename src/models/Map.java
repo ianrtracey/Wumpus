@@ -60,12 +60,16 @@ public class Map extends Observable {
 		while ( matrix[position[0]][position[1]] != null) {
 			position = getRandomPosition();
 		}
-		matrix[position[0]][position[1]] = new Room(hunter);
+		Room room = new Room(hunter);
+		matrix[position[0]][position[1]] = room;
+		room.visit();
 		hunter.setPosition(position[0], position[1]);
 	}
 	
 	public void placeHunter(Hunter hunter, int x, int y) {
-		matrix[x][y] = new Room(hunter);
+		Room room = new Room(null);
+		matrix[x][y] = room;
+		room.setHunter(hunter);
 	}
 	
 	public void placeSlime(ArrayList<SlimePit> slimePit, int x, int y) {
@@ -179,7 +183,7 @@ public class Map extends Observable {
 	
 	public char objectSymbol(Object obj) {
 		if(obj instanceof Wumpus){return 'W'; }
-		if(obj instanceof Hunter){return 'O'; }
+		if(obj instanceof Hunter) {return 'O'; }
 		if(obj instanceof SlimePit){return 'P'; }
 		if(obj instanceof Slime){return 'S'; }
 		if(obj instanceof Goop){return 'G'; }
@@ -189,6 +193,9 @@ public class Map extends Observable {
 	}
 	
 	private char getRoomObjectSymbol(Room room) {
+		if (room.getHunter() != null) {
+			return objectSymbol(room.getHunter());
+		}
 		if (room.isVisited && room.getContents() != null) {
 			return objectSymbol(room.getContents());
 		} else if (room.isVisited) {

@@ -139,7 +139,7 @@ public class ButtonListenerFactory {
 			} else {
 				newXPosition = (map.getHunter().getPositionX()+incrementValue) % map.getXSize();
 			}
-			map.place(map.getHunter(), newXPosition, map.getHunter().getPositionY());
+			map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()]; 
 			Room room;
 			if (map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].getContents() != null) {
 				room = new Room(map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].getContents());
