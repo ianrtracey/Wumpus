@@ -1,4 +1,4 @@
-package View;
+package view;
 import java.awt.BorderLayout;
 
 import java.awt.Color;
@@ -148,7 +148,7 @@ public class MainGUI implements Observer {
 		myTextArea.setForeground(Color.WHITE);
 		myTextArea.setText(game.getMap().toString() );
 		
-		myGraphicsView = new GraphicsView();
+		myGraphicsView = new GraphicsView(game.getMap());
 		myGraphicsView.setBackground(Color.BLACK);
 
 		// Add in the game status text panel
