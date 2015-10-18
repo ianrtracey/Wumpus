@@ -43,7 +43,7 @@ public class Game {
 	}
 	
 	public boolean determineHitOnWumpus(int arrowX, int arrowY) {
-		if (map.getMatrix()[arrowX][arrowY]instanceof Wumpus) {
+		if (map.getMatrix()[arrowX][arrowY].getContents() instanceof Wumpus) {
 			return true;
 		}
 		return false;
@@ -51,10 +51,10 @@ public class Game {
 	
 	public boolean hazardExistsInRoom(int x, int y) {
 		
-		if(map.getMatrix()[x][y] instanceof SlimePit) {
+		if(map.getMatrix()[x][y].getContents() instanceof SlimePit) {
 			return true;
 		}
-		if (map.getMatrix()[x][y] instanceof Wumpus) {
+		if (map.getMatrix()[x][y].getContents() instanceof Wumpus) {
 			return true;
 		}
 		

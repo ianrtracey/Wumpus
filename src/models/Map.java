@@ -39,7 +39,7 @@ public class Map extends Observable {
 		return YSIZE;
 	}
 	
-	public Object[][] getMatrix() {
+	public Room[][] getMatrix() {
 		return this.matrix;
 	}
 	

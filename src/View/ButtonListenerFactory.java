@@ -1,4 +1,4 @@
-package view;
+package View;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -140,7 +140,13 @@ public class ButtonListenerFactory {
 				newXPosition = (map.getHunter().getPositionX()+incrementValue) % map.getXSize();
 			}
 			map.place(map.getHunter(), newXPosition, map.getHunter().getPositionY());
-			Room room = new Room();
+			Room room;
+			if (map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].getContents() != null) {
+				room = new Room(map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].getContents());
+			} else {
+				room = new Room(null);
+			}
+			
 			room.visit();
 			map.place(room, map.getHunter().getPositionX(), map.getHunter().getPositionY());
 			map.getHunter().setPosition(newXPosition, map.getHunter().getPositionY());
@@ -164,7 +170,7 @@ public class ButtonListenerFactory {
 			} else {
 			map.place(map.getHunter(), map.getHunter().getPositionX(), newYPosition);
 			}
-			Room room = new Room();
+			Room room = new Room(null);
 			room.visit();
 			map.place(room, map.getHunter().getPositionX(), map.getHunter().getPositionY());
 			map.getHunter().setPosition(map.getHunter().getPositionX(), newYPosition);
