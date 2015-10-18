@@ -9,9 +9,6 @@ public class Map {
 	final int YSIZE = 10;
 	
 	Object[][] matrix;
-	Wumpus wumpus;
-	ArrayList<SlimePit> slimePits;
-	Hunter hunter;
 	
 	public Map(Wumpus wumpus, ArrayList<SlimePit> slimePits, Hunter hunter) {
 		this.matrix    = new Object[XSIZE][YSIZE];
@@ -19,13 +16,25 @@ public class Map {
 		placeWumpus(wumpus);
 		placeSlimePits(slimePits);
 		placeHunter(hunter);
-		
-		
+	}
+	
+	public Map() {
+		this.matrix    = new Object[XSIZE][YSIZE];
+	}
+	
+	public Object[][] getMatrix() {
+		return this.matrix;
 	}
 	
 	private void placeWumpus(Wumpus wumpus) {
 		int [] wumpusPosition = placeInRandomPosition(wumpus);
 		placeBlood(wumpusPosition);	
+	}
+	
+	public void placeWumpus(Wumpus wumpus, int x, int y) {
+		matrix[x][y] = wumpus;
+		int[] wumpusPosition = {x,y};
+		placeBlood(wumpusPosition);
 	}
 	
 	private void placeHunter(Hunter hunter) {
@@ -36,11 +45,27 @@ public class Map {
 		matrix[position[0]][position[1]] = hunter;
 	}
 	
+	public void placeHunter(Hunter hunter, int x, int y) {
+		matrix[x][y] = hunter;
+	}
+	
+	public void placeSlime(ArrayList<SlimePit> slimePit, int x, int y) {
+		matrix[x][y] = slimePit;
+		int[] slimePitPosition = {x,y};
+		placeSlime(slimePitPosition);
+	}
+	
 	private void placeSlimePits(ArrayList<SlimePit> slimePits) {
 		for(SlimePit slimepit : slimePits) {
 			int[] slimePitPosition = placeInRandomPosition(slimepit);
 			placeSlime(slimePitPosition);
 		}
+	}
+	
+	public void placeSlimePit(SlimePit slimepit, int x, int y) {
+		matrix[x][y] = slimepit;
+		int[] slimePitPosition = {x,y};
+		placeSlime(slimePitPosition);
 	}
 	
 	private void placeSlime(int[] slimePitPosition) {
@@ -112,7 +137,7 @@ public class Map {
 		int[] coordinates = getRandomPosition();
 		matrix[coordinates[0]][coordinates[1]] = obj;
 		
-		System.out.println("Placed: " + obj.getClass() + " in " + coordinates[0] + " " + coordinates[1]);
+		//System.out.println("Placed: " + obj.getClass() + " in " + coordinates[0] + " " + coordinates[1]);
 		return coordinates;
 	}
 	
