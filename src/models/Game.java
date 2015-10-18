@@ -19,6 +19,14 @@ public class Game {
 		return this.map;
 	}
 	
+	public Wumpus getWumpus() {
+		return wumpus;
+	}
+	
+	public Hunter getHunter() {
+		return hunter;
+	}
+	
 	private Wumpus generateWumpus() {
 		if (wumpus == null) {
 			wumpus = new Wumpus();
@@ -32,6 +40,25 @@ public class Game {
 		}
 		return hunter;
 		
+	}
+	
+	public boolean determineHitOnWumpus(int arrowX, int arrowY) {
+		if (map.getMatrix()[arrowX][arrowY]instanceof Wumpus) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean hazardExistsInRoom(int x, int y) {
+		
+		if(map.getMatrix()[x][y] instanceof SlimePit) {
+			return true;
+		}
+		if (map.getMatrix()[x][y] instanceof Wumpus) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	// generate 3-5 random slime pits

@@ -191,16 +191,19 @@ public class WumpusGUITEMP {
 
 	private void setUpListeners() {
 		
-		ButtonListenerFactory blFactory = new ButtonListenerFactory(this.game.getMap(), myTextArea);
+		ButtonListenerFactory blFactory = new ButtonListenerFactory(this.game.getMap(), myTextArea, game);
 		
 		moveUpButton.addActionListener(blFactory.createUpArrowListener());
 		moveLeftButton.addActionListener(blFactory.createLeftArrowListener());
 		moveRightButton.addActionListener(blFactory.createRightArrowListener());
 		moveDownButton.addActionListener(blFactory.createDownArrowListener());
 		
+		fireUpButton.addActionListener(blFactory.createUpFireArrowListener());
+		fireLeftButton.addActionListener(blFactory.createLeftFireArrowListener());
+		fireRightButton.addActionListener(blFactory.createRightFireArrowListener());
+		fireDownButton.addActionListener(blFactory.createDownFireArrowListener());
 		
-		// TODO Auto-generated method stub
-		
+				
 	}
 	
 
