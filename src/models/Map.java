@@ -9,23 +9,48 @@ public class Map {
 	final int YSIZE = 10;
 	
 	Object[][] matrix;
+	
 	Wumpus wumpus;
-	ArrayList<SlimePit> slimePits;
 	Hunter hunter;
 	
 	public Map(Wumpus wumpus, ArrayList<SlimePit> slimePits, Hunter hunter) {
 		this.matrix    = new Object[XSIZE][YSIZE];
 		
+		this.wumpus = wumpus;
+		this.hunter = hunter;
+		
 		placeWumpus(wumpus);
 		placeSlimePits(slimePits);
 		placeHunter(hunter);
-		
-		
+		placeRooms();
+	}
+	
+	public Map() {
+		this.matrix    = new Object[XSIZE][YSIZE];
+	}
+	
+	public int getXSize() {
+		return XSIZE;
+	}
+	
+	public int getYSize() {
+		return YSIZE;
+	}
+	
+	public Object[][] getMatrix() {
+		return this.matrix;
 	}
 	
 	private void placeWumpus(Wumpus wumpus) {
 		int [] wumpusPosition = placeInRandomPosition(wumpus);
+		wumpus.setPosition(wumpusPosition[0], wumpusPosition[1]);
 		placeBlood(wumpusPosition);	
+	}
+	
+	public void placeWumpus(Wumpus wumpus, int x, int y) {
+		matrix[x][y] = wumpus;
+		int[] wumpusPosition = {x,y};
+		placeBlood(wumpusPosition);
 	}
 	
 	private void placeHunter(Hunter hunter) {
@@ -34,6 +59,17 @@ public class Map {
 			position = getRandomPosition();
 		}
 		matrix[position[0]][position[1]] = hunter;
+		hunter.setPosition(position[0], position[1]);
+	}
+	
+	public void placeHunter(Hunter hunter, int x, int y) {
+		matrix[x][y] = hunter;
+	}
+	
+	public void placeSlime(ArrayList<SlimePit> slimePit, int x, int y) {
+		matrix[x][y] = slimePit;
+		int[] slimePitPosition = {x,y};
+		placeSlime(slimePitPosition);
 	}
 	
 	private void placeSlimePits(ArrayList<SlimePit> slimePits) {
@@ -41,6 +77,12 @@ public class Map {
 			int[] slimePitPosition = placeInRandomPosition(slimepit);
 			placeSlime(slimePitPosition);
 		}
+	}
+	
+	public void placeSlimePit(SlimePit slimepit, int x, int y) {
+		matrix[x][y] = slimepit;
+		int[] slimePitPosition = {x,y};
+		placeSlime(slimePitPosition);
 	}
 	
 	private void placeSlime(int[] slimePitPosition) {
@@ -101,18 +143,23 @@ public class Map {
 			matrix[x][--y] = new Blood();
 			k++;
 		}
-		
-		
-
-
-		
+	}
+	
+	public void placeRooms() {
+		for(int r = 0; r < XSIZE; r++) {
+			for(int c = 0; c < YSIZE; c++) {
+				if (matrix[r][c] == null) {
+					matrix[r][c] = new Room();
+				}
+			}
+		}
 	}
 	
 	private int[] placeInRandomPosition(Object obj) {
 		int[] coordinates = getRandomPosition();
 		matrix[coordinates[0]][coordinates[1]] = obj;
 		
-		System.out.println("Placed: " + obj.getClass() + " in " + coordinates[0] + " " + coordinates[1]);
+		//System.out.println("Placed: " + obj.getClass() + " in " + coordinates[0] + " " + coordinates[1]);
 		return coordinates;
 	}
 	
@@ -135,17 +182,40 @@ public class Map {
 		if(obj instanceof Slime){return 'S'; }
 		if(obj instanceof Goop){return 'G'; }
 		if(obj instanceof Blood){return 'B'; }
+		if(obj instanceof Room){ return getRoomObjectSymbol((Room)obj); }
 		return 'i';
+	}
+	
+	private char getRoomObjectSymbol(Room room) {
+		if (room.isVisited) {
+			return 'v';
+		}
+		return 'X';
+	}
+	
+	public Wumpus getWumpus() {
+		return this.wumpus;
+	}
+	
+	public Hunter getHunter() {
+		return this.hunter;
+	}
+	
+	public void place(Object object, int x, int y) {
+		matrix[x][y] = object;
 	}
 	
 	public String toString() {
 		String mapAsString = "";
 		for(int r = 0; r < XSIZE; r++) {
 			for(int c = 0; c < YSIZE; c++) {
-				if (matrix[r][c] != null) {
-					mapAsString += "[" + objectSymbol(matrix[r][c]) + "] ";
+				if (objectSymbol(matrix[r][c]) == 'v') {
+					mapAsString += " [ " + " "+ " ] ";
+				}
+				else if (matrix[r][c] != null) {
+					mapAsString += " [" + objectSymbol(matrix[r][c]) + "] ";
 				} else {
-					mapAsString += "[ ] ";
+					mapAsString += " [?] ";
 				}
 			}
 			mapAsString += "\n";

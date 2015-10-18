@@ -12,8 +12,11 @@ public class Game {
 	
 	
 	public Game() {
-		map = new Map( generateWumpus(), generateSlimePits(), generateHunter()); 
-		System.out.println( map.toString() );
+		this.map = new Map( generateWumpus(), generateSlimePits(), generateHunter()); 
+	}
+	
+	public Map getMap() {
+		return this.map;
 	}
 	
 	private Wumpus generateWumpus() {
