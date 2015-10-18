@@ -13,11 +13,9 @@ import models.Room;
 public class ButtonListenerFactory {
 	
 	Map map;
-	JTextArea textMap;
 	Game game;
 	
 	public ButtonListenerFactory(Map map, JTextArea textMap, Game game) { this.map = map;
-															   this.textMap = textMap; 
 															   this.game = game; }
 	
 	public UpArrowListener createUpArrowListener() { return new UpArrowListener(); }
@@ -149,7 +147,6 @@ public class ButtonListenerFactory {
 
 			System.out.println("Hunter: " + map.getHunter().getPositionX() + " " +
 											map.getHunter().getPositionY());
-			textMap.setText(map.toString());
 
 			
 		}
@@ -174,7 +171,6 @@ public class ButtonListenerFactory {
 
 			System.out.println("Hunter: " + map.getHunter().getPositionX() + " " +
 											map.getHunter().getPositionY());
-			textMap.setText(map.toString());
 
 			
 		}

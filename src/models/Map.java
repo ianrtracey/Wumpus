@@ -214,7 +214,7 @@ public class Map extends Observable {
 		for(int r = 0; r < XSIZE; r++) {
 			for(int c = 0; c < YSIZE; c++) {
 				if (objectSymbol(matrix[r][c]) == 'v') {
-					mapAsString += "[ " + " "+ " ] ";
+					mapAsString += "[ ] ";
 				}
 				else if (matrix[r][c] != null) {
 					mapAsString += "[" + objectSymbol(matrix[r][c]) + "] ";
