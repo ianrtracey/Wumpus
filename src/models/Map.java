@@ -106,11 +106,11 @@ public class Map extends Observable {
 	}
 	
 	private void placeSlimeOrGoop(int x, int y) {
-//		if (matrix[x][y].getContents() != null && matrix[x][y].getContents() instanceof Blood ) {
-//			matrix[x][y] = new Room(new Goop());
-//		} else {
-//			matrix[x][y] = new Room(new Slime());
-//		}
+		if (matrix[x][y] != null && matrix[x][y].getContents() instanceof Blood ) {
+			matrix[x][y] = new Room(new Goop());
+		} else {
+			matrix[x][y] = new Room(new Slime());
+		}
 	}
 	
 	private void placeBlood(int[] wumpusPosition) {
