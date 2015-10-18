@@ -5,11 +5,13 @@ public class Room {
 	boolean isVisited;
 	Object contents;
 	Hunter hunter;
+
 	
 	public Room(Object object) {
 		this.contents = object;
-		this.isVisited = true;
+		this.isVisited = false;
 		this.hunter = null;
+
 	}
 	
 	public void visit() {
@@ -37,5 +39,4 @@ public class Room {
 	}
 	
 	
-
 }
