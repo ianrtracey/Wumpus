@@ -60,9 +60,10 @@ public class Map extends Observable {
 		while ( matrix[position[0]][position[1]] != null) {
 			position = getRandomPosition();
 		}
-		Room room = new Room(hunter);
-		matrix[position[0]][position[1]] = room;
+		Room room = new Room(null);
+		room.setHunter(hunter);
 		room.visit();
+		matrix[position[0]][position[1]] = room;
 		hunter.setPosition(position[0], position[1]);
 	}
 	
@@ -188,8 +189,7 @@ public class Map extends Observable {
 		if(obj instanceof Slime){return 'S'; }
 		if(obj instanceof Goop){return 'G'; }
 		if(obj instanceof Blood){return 'B'; }
-		if(obj instanceof Room){ return getRoomObjectSymbol((Room)obj); }
-		return 'i';
+		return 'v';
 	}
 	
 	private char getRoomObjectSymbol(Room room) {
@@ -198,7 +198,8 @@ public class Map extends Observable {
 		}
 		if (room.isVisited && room.getContents() != null) {
 			return objectSymbol(room.getContents());
-		} else if (room.isVisited) {
+		}
+		if (room.isVisited && room.getContents() == null) {
 			return 'v';
 		}
 		return 'X';
@@ -214,6 +215,11 @@ public class Map extends Observable {
 	
 	public void place(Object object, int x, int y) {
 		matrix[x][y] = new Room(object);
+		
+	}
+	
+	public void changed() {
+		System.out.println("changed");
 		setChanged();
 		notifyObservers(this);
 	}
@@ -222,11 +228,12 @@ public class Map extends Observable {
 		String mapAsString = "";
 		for(int r = 0; r < XSIZE; r++) {
 			for(int c = 0; c < YSIZE; c++) {
-				if (objectSymbol(matrix[r][c]) == 'v') {
+				
+				if (getRoomObjectSymbol(matrix[r][c]) == 'v') {
 					mapAsString += "[ ] ";
 				}
 				else if (matrix[r][c] != null) {
-					mapAsString += "[" + objectSymbol(matrix[r][c]) + "] ";
+					mapAsString += "[" + getRoomObjectSymbol(matrix[r][c]) + "] ";
 				} else {
 					mapAsString += " [?] ";
 				}

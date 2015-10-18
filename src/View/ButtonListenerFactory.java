@@ -5,8 +5,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import models.Game;
+import models.Hunter;
 import models.Map;
 import models.Room;
 
@@ -139,18 +141,13 @@ public class ButtonListenerFactory {
 			} else {
 				newXPosition = (map.getHunter().getPositionX()+incrementValue) % map.getXSize();
 			}
-			map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()]; 
-			Room room;
-			if (map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].getContents() != null) {
-				room = new Room(map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].getContents());
-			} else {
-				room = new Room(null);
-			}
-			
-			room.visit();
-			map.place(room, map.getHunter().getPositionX(), map.getHunter().getPositionY());
+			Hunter hunter = map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].getHunter();
+			map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].removeHunter();
+			Room nextRoom = map.getMatrix()[newXPosition][map.getHunter().getPositionY()];
 			map.getHunter().setPosition(newXPosition, map.getHunter().getPositionY());
-
+			nextRoom.visit();
+			nextRoom.setHunter(hunter);
+			map.changed();
 			System.out.println("Hunter: " + map.getHunter().getPositionX() + " " +
 											map.getHunter().getPositionY());
 
@@ -165,18 +162,19 @@ public class ButtonListenerFactory {
 			} else {
 				newYPosition = (map.getHunter().getPositionY()+incrementValue) % map.getXSize();
 			}
-			if ( game.hazardExistsInRoom(map.getHunter().getPositionX(), newYPosition) ) {
-				System.out.println("You're Dead!");
-			} else {
-			map.place(map.getHunter(), map.getHunter().getPositionX(), newYPosition);
+			Hunter hunter = map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].getHunter();
+			if (hunter == null) {
+				System.out.println("hunter null");
 			}
-			Room room = new Room(null);
-			room.visit();
-			map.place(room, map.getHunter().getPositionX(), map.getHunter().getPositionY());
+			map.getMatrix()[map.getHunter().getPositionX()][map.getHunter().getPositionY()].removeHunter();
+			Room nextRoom = map.getMatrix()[map.getHunter().getPositionX()][newYPosition];
 			map.getHunter().setPosition(map.getHunter().getPositionX(), newYPosition);
-
+			nextRoom.visit();
+			nextRoom.setHunter(hunter);
+			map.changed();
 			System.out.println("Hunter: " + map.getHunter().getPositionX() + " " +
 											map.getHunter().getPositionY());
+
 
 			
 		}
