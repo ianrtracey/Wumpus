@@ -1,4 +1,4 @@
-package View;
+package view;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
