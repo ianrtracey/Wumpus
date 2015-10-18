@@ -1,4 +1,4 @@
-package View;
+package view;
 import java.awt.BorderLayout;
 
 import java.awt.Color;
@@ -21,7 +21,7 @@ import models.*;
 import java.awt.Font;
 
 
-public class WumpusGUITEMP {
+public class MainGUI {
 	
 	Game game;
 	
@@ -31,7 +31,7 @@ public class WumpusGUITEMP {
 	// ------------------------------------------|
 	public static void main(String[] args) {
 		Game game = new Game();
-		WumpusGUITEMP myGUI = new WumpusGUITEMP(game); // Create an instance
+		MainGUI myGUI = new MainGUI(game); // Create an instance
 		
 	}
 	
@@ -69,15 +69,14 @@ public class WumpusGUITEMP {
 	JButton fireRightButton;
 	
 	// Model view GUI Objects
-	JTabbedPane myPane = new JTabbedPane();
+	JTabbedPane myJTPane = new JTabbedPane();
 	JTextArea myTextArea;
-	
-	
+	GraphicsView myGraphicsView;
 
 	// ------------------------------------------|
 	// ### GUI OBJECT CONSTRUCTOR                |
 	// ------------------------------------------|
-	public WumpusGUITEMP(Game game) {
+	public MainGUI(Game game) {
 		this.loadAndAssignImages(); // Load and assign our image resources
 		this.game = game;
 		this.setUpGUI(this.game);   // Set up the rest of the GUI
@@ -137,23 +136,29 @@ public class WumpusGUITEMP {
 		moveAndFireContainer.add(fireLabelPanel);
 		moveAndFireContainer.add(firePanel);
 		
-		// Prepare the TextArea view
+		// Prepare the TextArea and Graphics views, create JTabbedPane, add components
 		myTextArea = new JTextArea(100, 100);
 		myTextArea.setEditable(false);
-		myTextArea.setFont(new Font("Arial", Font.BOLD, 16));
-		myTextArea.setForeground(Color.BLACK);
+		myTextArea.setFont(new Font("Courier New", Font.BOLD, 16));
+		myTextArea.setBackground(Color.BLUE);
+		myTextArea.setForeground(Color.WHITE);
 		myTextArea.setText(game.getMap().toString() );
 		
+		myGraphicsView = new GraphicsView();
 
-
+		// Add in the game status text panel
+		
+		
+		myJTPane.addTab("Text View", myTextArea);
+		myJTPane.addTab("Graphics View", myGraphicsView);
 		viewAndTextContainer.setLayout(new BoxLayout(viewAndTextContainer, BoxLayout.Y_AXIS));
-		viewAndTextContainer.setPreferredSize(new Dimension(350,600));
-		viewAndTextContainer.add(myTextArea);
+		viewAndTextContainer.setPreferredSize(new Dimension(420,600));
+		viewAndTextContainer.add(myJTPane);
 		
 		// Add the two left/right side containers to the frame
 		myFrame.getContentPane().add(BorderLayout.WEST, moveAndFireContainer);
 		myFrame.getContentPane().add(BorderLayout.EAST, viewAndTextContainer);
-		myFrame.setSize(600, 600);
+		myFrame.setSize(720, 600);
 	
 		// Lastly, let's make sure we can see it!
 		myFrame.setVisible(true);
@@ -171,7 +176,7 @@ public class WumpusGUITEMP {
 		// My quick and dirty try-catch in case an ImageIcon image we're not to work...
 		for (int i = 0; i < temp.length; i++) {
 			if (temp[i].getIconHeight() == -1){
-				System.out.println(">>>ERROR - DID NOT FIND IMAGE: \"" + temp[i].toString() + "\" \n   Closing Program...");
+				System.out.println(">>> ERROR - Did not find image: \"" + temp[i].toString() + "\" \n    Closing Program...");
 				System.exit(1);
 			}
 		}

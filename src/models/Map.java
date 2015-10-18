@@ -210,10 +210,10 @@ public class Map {
 		for(int r = 0; r < XSIZE; r++) {
 			for(int c = 0; c < YSIZE; c++) {
 				if (objectSymbol(matrix[r][c]) == 'v') {
-					mapAsString += " [ " + " "+ " ] ";
+					mapAsString += "[ " + " "+ " ] ";
 				}
 				else if (matrix[r][c] != null) {
-					mapAsString += " [" + objectSymbol(matrix[r][c]) + "] ";
+					mapAsString += "[" + objectSymbol(matrix[r][c]) + "] ";
 				} else {
 					mapAsString += " [?] ";
 				}
