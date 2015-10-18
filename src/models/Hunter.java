@@ -6,13 +6,12 @@ public class Hunter {
 	int positionX, positionY;
 	Arrow arrow;
 	
-	public Hunter() {}
+	public Hunter() { this.arrow = new Arrow(); }
 	
 	public void setPosition(int x, int y) {
 		
 		this.positionX = x;
 		this.positionY = y;
-		this.arrow = new Arrow();
 	}
 	
 	public int getPositionX() {

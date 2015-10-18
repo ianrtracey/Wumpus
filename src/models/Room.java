@@ -8,7 +8,7 @@ public class Room {
 	
 	public Room(Object object) {
 		this.contents = object;
-		this.isVisited = true;
+		this.isVisited = false;
 		this.hunter = null;
 	}
 	
