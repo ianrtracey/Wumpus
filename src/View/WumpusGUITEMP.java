@@ -1,5 +1,6 @@
 package View;
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -13,21 +14,25 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import models.Goop;
+import models.*;
+
+
 
 import java.awt.Font;
 
 
 public class WumpusGUITEMP {
 	
-	int[][] myArray = new int[10][10];
+	Game game;
 	
 	
 	// ------------------------------------------|
 	// ### GUI OBJ INSTANTIATION / MAIN METHOD   |
 	// ------------------------------------------|
-	public static void main(String[] args) {	
-		WumpusGUITEMP myGUI = new WumpusGUITEMP(); // Create an instance
+	public static void main(String[] args) {
+		Game game = new Game();
+		WumpusGUITEMP myGUI = new WumpusGUITEMP(game); // Create an instance
+		
 	}
 	
 	// ------------------------------------------|
@@ -72,17 +77,19 @@ public class WumpusGUITEMP {
 	// ------------------------------------------|
 	// ### GUI OBJECT CONSTRUCTOR                |
 	// ------------------------------------------|
-	public WumpusGUITEMP() {
+	public WumpusGUITEMP(Game game) {
 		this.loadAndAssignImages(); // Load and assign our image resources
-		this.setUpGUI();            // Set up the rest of the GUI
+		this.game = game;
+		this.setUpGUI(this.game);   // Set up the rest of the GUI
 		this.setUpListeners();      // Set up the listeners
-		this.TEMPBUILDARRAY();
+
+		
 	}
 	
 	// ------------------------------------------|
 	// ### GUI CONSTRUCTION AND RUNTIME METHODS  |
 	// ------------------------------------------|	
-	private void setUpGUI() {
+	private void setUpGUI(Game game) {
 		// Take care of the basic frame settings first
 		myFrame.setResizable(false);   // Lock the frame, we don't want people resizing
 		myFrame.setLocation(120, 120); // Set location to 120 down, 120 right
@@ -134,28 +141,14 @@ public class WumpusGUITEMP {
 		myTextArea = new JTextArea(100, 100);
 		myTextArea.setEditable(false);
 		myTextArea.setFont(new Font("Arial", Font.BOLD, 16));
-		myTextArea.setForeground(Color.WHITE);
-		myTextArea.setBackground(Color.BLUE);
-		this.TEMPBUILDARRAY();
+		myTextArea.setForeground(Color.BLACK);
+		myTextArea.setText(game.getMap().toString() );
 		
-		for (int i = 0; i < myArray.length; i++) {
-			for (int j = 0; j < myArray.length; j++) {
-				myTextArea.append(" [ " + myArray[i][j] + " ] ");
-				
-			}
-			myTextArea.append("\n\n");
-		}
+
+
 		viewAndTextContainer.setLayout(new BoxLayout(viewAndTextContainer, BoxLayout.Y_AXIS));
 		viewAndTextContainer.setPreferredSize(new Dimension(350,600));
 		viewAndTextContainer.add(myTextArea);
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		// Add the two left/right side containers to the frame
 		myFrame.getContentPane().add(BorderLayout.WEST, moveAndFireContainer);
@@ -170,9 +163,9 @@ public class WumpusGUITEMP {
 	private void loadAndAssignImages() {
 		
 		ImageIcon temp[] = new ImageIcon[4];
-		temp[0] = upArrow = new ImageIcon("WumpArrowsSimple/Up.jpg");
-		temp[1] = downArrow = new ImageIcon("WumpArrowsSimple/Down.jpg");
-		temp[2] = leftArrow = new ImageIcon("WumpArrowsSimple/Left.jpg");
+		temp[0] = upArrow    = new ImageIcon("WumpArrowsSimple/Up.jpg");
+		temp[1] = downArrow  = new ImageIcon("WumpArrowsSimple/Down.jpg");
+		temp[2] = leftArrow  = new ImageIcon("WumpArrowsSimple/Left.jpg");
 		temp[3] = rightArrow = new ImageIcon("WumpArrowsSimple/Right.jpg");
 		
 		// My quick and dirty try-catch in case an ImageIcon image we're not to work...
@@ -197,24 +190,19 @@ public class WumpusGUITEMP {
 
 
 	private void setUpListeners() {
+		
+		ButtonListenerFactory blFactory = new ButtonListenerFactory(this.game.getMap(), myTextArea);
+		
+		moveUpButton.addActionListener(blFactory.createUpArrowListener());
+		moveLeftButton.addActionListener(blFactory.createLeftArrowListener());
+		moveRightButton.addActionListener(blFactory.createRightArrowListener());
+		moveDownButton.addActionListener(blFactory.createDownArrowListener());
+		
+		
 		// TODO Auto-generated method stub
 		
 	}
+	
 
-
-
-	
-	
-	
-	
-	public void TEMPBUILDARRAY(){
-		for (int i = 0; i < myArray.length; i++) {
-			for (int j = 0; j < myArray.length; j++) {
-				myArray[i][j] = 6;
-			}
-		}
-	}
-	
-	
 
 }

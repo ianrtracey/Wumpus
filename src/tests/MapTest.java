@@ -24,8 +24,8 @@ public class MapTest {
 		assertTrue(map.objectSymbol(wumpus) == 'W');
 		assertTrue(map.objectSymbol(slimePits.get(0)) == 'P');
 		assertTrue(map.objectSymbol(hunter) == 'O');
-		assertTrue(map.objectSymbol(blood) == 'B');
-		assertTrue(map.objectSymbol(slime) == 'S');
+		assertTrue(map.objectSymbol(blood)  == 'B');
+		assertTrue(map.objectSymbol(slime)  == 'S');
 		
 	}
 	
@@ -40,7 +40,6 @@ public class MapTest {
 		map.placeSlimePit(slimepit1, 2, 3);
 		map.placeSlimePit(slimepit1, 3, 4);
 		map.placeHunter(new Hunter(), 0, 0);
-		System.out.println( map.toString() );
 		assertTrue(map.getMatrix()[5][5] instanceof Wumpus);
 		assertTrue(map.getMatrix()[0][0] instanceof Hunter);
 		assertTrue(map.getMatrix()[5][8] instanceof SlimePit);
@@ -55,6 +54,13 @@ public class MapTest {
 		assertTrue(map.getMatrix()[5][4] instanceof Blood);
 		assertTrue(map.getMatrix()[5][3] instanceof Blood);
 		assertTrue(map.getMatrix()[6][5] instanceof Blood);
+	}
+	
+	@Test
+	public void testIfMapIsNull() {
+		Game game = new Game();
+		assertNotNull(game.getMap());
+		System.out.println( game.getMap().toString() );
 	}
 	
 
