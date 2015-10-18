@@ -34,6 +34,7 @@ public class MainGUI implements Observer {
 	public static void main(String[] args) {
 		Game game = new Game();
 		MainGUI myGUI = new MainGUI(game); // Create an instance
+		game.getMap().addObserver(myGUI);
 		
 	}
 	
