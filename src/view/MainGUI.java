@@ -72,6 +72,8 @@ public class MainGUI {
 	JTabbedPane myJTPane = new JTabbedPane();
 	JTextArea myTextArea;
 	GraphicsView myGraphicsView;
+	JLabel gameEventsLabel;
+	JPanel gameEventsContainer = new JPanel();
 
 	// ------------------------------------------|
 	// ### GUI OBJECT CONSTRUCTOR                |
@@ -130,7 +132,7 @@ public class MainGUI {
 		
 		// Prepare the left side container (move and fire controls / labels), add components
 		moveAndFireContainer.setLayout(new BoxLayout(moveAndFireContainer, BoxLayout.Y_AXIS));
-		moveAndFireContainer.setPreferredSize(new Dimension(240,600));
+		moveAndFireContainer.setPreferredSize(new Dimension(240,720));
 		moveAndFireContainer.add(moveLabelPanel);
 		moveAndFireContainer.add(movePanel);
 		moveAndFireContainer.add(fireLabelPanel);
@@ -145,20 +147,26 @@ public class MainGUI {
 		myTextArea.setText(game.getMap().toString() );
 		
 		myGraphicsView = new GraphicsView();
+		myGraphicsView.setBackground(Color.BLACK);
 
 		// Add in the game status text panel
+		gameEventsLabel = new JLabel("Welcome to Ian and Steve's Hunt the Wumpus!");
+		gameEventsLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		fireLabel.setForeground(Color.BLUE);
+		gameEventsContainer.add(gameEventsLabel);
 		
-		
-		myJTPane.addTab("Text View", myTextArea);
+		// Set up the JTabbedPanel
 		myJTPane.addTab("Graphics View", myGraphicsView);
+		myJTPane.addTab("Text View", myTextArea);
 		viewAndTextContainer.setLayout(new BoxLayout(viewAndTextContainer, BoxLayout.Y_AXIS));
-		viewAndTextContainer.setPreferredSize(new Dimension(420,600));
+		viewAndTextContainer.setPreferredSize(new Dimension(504,600));
 		viewAndTextContainer.add(myJTPane);
+		viewAndTextContainer.add(gameEventsContainer);
 		
 		// Add the two left/right side containers to the frame
 		myFrame.getContentPane().add(BorderLayout.WEST, moveAndFireContainer);
 		myFrame.getContentPane().add(BorderLayout.EAST, viewAndTextContainer);
-		myFrame.setSize(720, 600);
+		myFrame.setSize(798, 600);
 	
 		// Lastly, let's make sure we can see it!
 		myFrame.setVisible(true);
@@ -191,8 +199,6 @@ public class MainGUI {
 		fireRightButton =  new JButton(rightArrow);
 		
 	} // Ends Method loadAndAssignImages
-
-
 
 	private void setUpListeners() {
 		
