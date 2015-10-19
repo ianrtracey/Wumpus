@@ -171,23 +171,11 @@ public class ButtonListenerFactory {
 		}
 		
 		private void fireInXDirection(int incrementValue) {
-			if(game.getHunter().fire() && game.determineHitOnWumpus(game.getHunter().getPositionX()+incrementValue,
-					  game.getHunter().getPositionY()) ){
-			System.out.println("wumpus hit!");
-			} else {
-			;
-			System.out.println("you're dead!");
-			}	
+			handleFireMessage(1,0);
 		}
 		
-		private void fireInYDirection(int incrementValue) {
-			if(game.getHunter().fire() && game.determineHitOnWumpus(game.getHunter().getPositionX(),
-					  game.getHunter().getPositionY()+incrementValue) ){
-			System.out.println("wumpus hit!");
-			} else {
-			map.getMapMessenger().send("DEAD");
-			System.out.println("you're dead!");
-			}	
+		private void fireInYDirection(int incrementXValue) {
+			handleFireMessage(0,1);
 		}
 		
 		private void handleMovementMessage() {
@@ -212,7 +200,16 @@ public class ButtonListenerFactory {
 			
 		}
 		
-		private void handleFireMessage() {
+		private void handleFireMessage(int incrementX, int incrementY) {
+			
+			if(game.getHunter().fire() && game.determineHitOnWumpus(game.getHunter().getPositionX()+incrementX,
+					  game.getHunter().getPositionY()+incrementY) ){
+				
+				map.getMapMessenger().send("HITWUMPUS");
+			} else {
+				
+				map.getMapMessenger().send("MISSEDWUMPUS");
+			}
 			
 		}
 		

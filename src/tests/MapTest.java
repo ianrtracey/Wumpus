@@ -40,20 +40,20 @@ public class MapTest {
 		map.placeSlimePit(slimepit1, 2, 3);
 		map.placeSlimePit(slimepit1, 3, 4);
 		map.placeHunter(new Hunter(), 0, 0);
-		assertTrue(map.getMatrix()[5][5] instanceof Wumpus);
-		assertTrue(map.getMatrix()[0][0] instanceof Hunter);
-		assertTrue(map.getMatrix()[5][8] instanceof SlimePit);
-		assertTrue(map.getMatrix()[2][3] instanceof SlimePit);
-		assertTrue(map.getMatrix()[3][4] instanceof SlimePit);
+		assertTrue(map.getMatrix()[5][5].getContents() instanceof Wumpus);
+		assertTrue(map.getMatrix()[0][0].getContents() instanceof Hunter);
+		assertTrue(map.getMatrix()[5][8].getContents() instanceof SlimePit);
+		assertTrue(map.getMatrix()[2][3].getContents() instanceof SlimePit);
+		assertTrue(map.getMatrix()[3][4].getContents() instanceof SlimePit);
 		
-		assertTrue(map.getMatrix()[4][8] instanceof Slime);
-		assertTrue(map.getMatrix()[6][8] instanceof Slime);
-		assertTrue(map.getMatrix()[5][9] instanceof Slime);
+		assertTrue(map.getMatrix()[4][8].getContents() instanceof Slime);
+		assertTrue(map.getMatrix()[6][8].getContents() instanceof Slime);
+		assertTrue(map.getMatrix()[5][9].getContents() instanceof Slime);
 		
-		assertTrue(map.getMatrix()[5][6] instanceof Blood);
-		assertTrue(map.getMatrix()[5][4] instanceof Blood);
-		assertTrue(map.getMatrix()[5][3] instanceof Blood);
-		assertTrue(map.getMatrix()[6][5] instanceof Blood);
+		assertTrue(map.getMatrix()[5][6].getContents() instanceof Blood);
+		assertTrue(map.getMatrix()[5][4].getContents() instanceof Blood);
+		assertTrue(map.getMatrix()[5][3].getContents() instanceof Blood);
+		assertTrue(map.getMatrix()[6][5].getContents() instanceof Blood);
 	}
 	
 	@Test
