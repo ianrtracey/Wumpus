@@ -22,9 +22,7 @@ public class GraphicsView extends JPanel{
 	private Image IMG_PLAYER;
 	private Image IMG_PLAYLINK;
 	private Image IMG_CACO;
-	private Image IMG_WUMPUS;
 	private Image IMG_CLOUDS;
-	private Image IMG_LEST; // <------ DELETE THIS BEFORE SUBMIT
 	
 	Map gameMap;
 	Room[][] gameState;
@@ -43,11 +41,9 @@ public class GraphicsView extends JPanel{
 			IMG_SLIME    = ImageIO.read(new File("./img/Slime.png"));
 			IMG_PIT      = ImageIO.read(new File("./img/SlimePit.png"));
 			IMG_PLAYER   = ImageIO.read(new File("./img/TheHunter.png"));
-			IMG_WUMPUS   = ImageIO.read(new File("./img/Wumpus.png"));
 			IMG_CLOUDS   = ImageIO.read(new File("./img/Clouds.png"));
 			IMG_CACO     = ImageIO.read(new File("./img/Cacodemon.png")); 
 			IMG_PLAYLINK = ImageIO.read(new File("./img/PlayerLink.png"));
-			IMG_LEST     = ImageIO.read(new File("./img/Lest.png")); // <------ DELETE THIS BEFORE SUBMIT
 		} catch (Exception e) {
 			System.out.println(">>> ERROR: Could not load image resource(s). \n    Closing Program...");
 			System.exit(1); // Quit program cause we want image resources to load
@@ -77,7 +73,7 @@ public class GraphicsView extends JPanel{
 		    	  if(gameMap.objectSymbol(gameState[curRow][curCol].getContents()) == 'P'){g2.drawImage(IMG_PIT,   r, c, null);}	    	  
 		    	  
 		    	  // Finally: Actors	    	  
-		    	  if(gameState[curRow][curCol].getHunter() != null){g2.drawImage(IMG_PLAYER, r, c, null);}
+		    	  if(gameState[curRow][curCol].getHunter() != null){g2.drawImage(IMG_PLAYLINK, r, c, null);}
 		    	  if(gameMap.objectSymbol(gameState[curRow][curCol].getContents()) == 'W'){g2.drawImage(IMG_CACO  , r, c, null);} //   <------ MCCANN EASTER EGG - DELETE THIS BEFORE SUBMIT
 		    	  //if(gameMap.objectSymbol(gameState[curRow][curCol].getContents()) == 'W'){g2.drawImage(IMG_WUMPUS, r, c, null);} // <------ THIS IS THE REAL ONE 	  
 	    	  }   
