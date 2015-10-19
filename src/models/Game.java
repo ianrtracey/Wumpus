@@ -65,6 +65,15 @@ public class Game extends Observable {
 		if (map.getMatrix()[x][y].getContents() instanceof Wumpus) {
 			return map.getMatrix()[x][y].getContents();
 		}
+		if (map.getMatrix()[x][y].getContents() instanceof Slime) {
+			return map.getMatrix()[x][y].getContents();
+		}
+		if (map.getMatrix()[x][y].getContents() instanceof Goop) {
+			return map.getMatrix()[x][y].getContents();
+		}	
+		if (map.getMatrix()[x][y].getContents() instanceof Blood) {
+			return map.getMatrix()[x][y].getContents();
+		}
 		
 		return null;
 	}

@@ -7,10 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
-import models.Game;
-import models.Hunter;
-import models.Map;
-import models.Room;
+import models.*;
 
 public class ButtonListenerFactory {
 	
@@ -148,15 +145,7 @@ public class ButtonListenerFactory {
 			nextRoom.visit();
 			nextRoom.setHunter(hunter);
 			map.changed();
-<<<<<<< HEAD
-=======
-			
->>>>>>> 06a5388459ef6664fb8c494ea6a9694864ebb0e0
-
-			if(game.hazardExistsInRoom(map.getHunter().getPositionX(), map.getHunter().getPositionY()) == true){
-				map.getMapMessenger().send("Q");
-			}
-			
+			handleMovementMessage();
 		}
 		
 		private void moveInYDirection(int incrementValue) {
@@ -177,11 +166,8 @@ public class ButtonListenerFactory {
 			nextRoom.visit();
 			nextRoom.setHunter(hunter);
 			map.changed();
-			
-			if(game.hazardExistsInRoom(map.getHunter().getPositionX(), map.getHunter().getPositionY()) == true){
-				map.getMapMessenger().send("Q");
-			}
-			
+			handleMovementMessage();
+
 		}
 		
 		private void fireInXDirection(int incrementValue) {
@@ -202,6 +188,32 @@ public class ButtonListenerFactory {
 			map.getMapMessenger().send("DEAD");
 			System.out.println("you're dead!");
 			}	
+		}
+		
+		private void handleMovementMessage() {
+			Object hazard = game.hazardExistsInRoom(map.getHunter().getPositionX(), map.getHunter().getPositionY());
+			if (hazard != null) {
+				if (hazard instanceof Wumpus) {
+					map.getMapMessenger().send("WUMPUS");
+				}
+				if (hazard instanceof SlimePit) {
+					map.getMapMessenger().send("SLIMEPIT");
+				}
+				if (hazard instanceof Slime) {
+					map.getMapMessenger().send("SLIME");
+				}
+				if (hazard instanceof Blood) {
+					map.getMapMessenger().send("BLOOD");
+				}
+				if (hazard instanceof Goop) {
+					map.getMapMessenger().send("GOOP");
+				}
+			}
+			
+		}
+		
+		private void handleFireMessage() {
+			
 		}
 		
 
