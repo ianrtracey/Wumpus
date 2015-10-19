@@ -21,6 +21,10 @@ public class Game {
 		return this.map;
 	}
 	
+	public void setMap(Map map) {
+		this.map = map;
+	}
+	
 
 	
 	public Wumpus getWumpus() {
@@ -62,7 +66,7 @@ public class Game {
 
 	}
 	
-	private int[] wrapAroundPositionIncrement(int currentX, int currentY, int incX, int incY) {
+	public int[] wrapAroundPositionIncrement(int currentX, int currentY, int incX, int incY) {
 		int safePositionX, safePositionY;
 		int[] position;
 		
