@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
-public class Game extends Observable {
+public class Game {
 	
 	Wumpus wumpus;
 	Hunter hunter;
@@ -21,11 +21,11 @@ public class Game extends Observable {
 		return this.map;
 	}
 	
-	public void changeStatus(){
-		this.status = false;
-		setChanged();
-		notifyObservers(this);
+	public void setMap(Map map) {
+		this.map = map;
 	}
+	
+
 	
 	public Wumpus getWumpus() {
 		return wumpus;
@@ -66,7 +66,7 @@ public class Game extends Observable {
 
 	}
 	
-	private int[] wrapAroundPositionIncrement(int currentX, int currentY, int incX, int incY) {
+	public int[] wrapAroundPositionIncrement(int currentX, int currentY, int incX, int incY) {
 		int safePositionX, safePositionY;
 		int[] position;
 		
