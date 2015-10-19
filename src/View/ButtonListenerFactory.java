@@ -148,6 +148,10 @@ public class ButtonListenerFactory {
 			nextRoom.visit();
 			nextRoom.setHunter(hunter);
 			map.changed();
+<<<<<<< HEAD
+=======
+			
+>>>>>>> 06a5388459ef6664fb8c494ea6a9694864ebb0e0
 
 			if(game.hazardExistsInRoom(map.getHunter().getPositionX(), map.getHunter().getPositionY()) == true){
 				map.getMapMessenger().send("Q");
