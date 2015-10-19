@@ -217,13 +217,7 @@ public class MainGUI implements Observer {
 		fireUpButton.addActionListener(blFactory.createUpFireArrowListener());
 		fireLeftButton.addActionListener(blFactory.createLeftFireArrowListener());
 		fireRightButton.addActionListener(blFactory.createRightFireArrowListener());
-		fireDownButton.addActionListener(blFactory.createDownFireArrowListener());
-		
-
-		
-
-		
-				
+		fireDownButton.addActionListener(blFactory.createDownFireArrowListener());			
 	}
 
 	@Override
@@ -232,40 +226,64 @@ public class MainGUI implements Observer {
 		gameEventsLabel.setText((String)arg);         // This will update GameEventsLabel
 		myTextArea.setText(game.getMap().toString()); // This will update the Text View
 		myGraphicsView.repaint();                     // This will update the Graphics
+		passArgToMessageSwitch(arg);				  // This will update GameEventsLabel and lock GUI when game won/lost
+	}
+	
+	private void passArgToMessageSwitch(Object a){
 		
-		
-		
-		if (arg == "WUMPUS") {
+		switch ((String)a){
+		case "WUMPUS": 	
 			gameEventsLabel.setText("Sorry Dude...You got wacked by the Wumpus!!!"); 
 			gameEventsLabel.setForeground(Color.RED);
 			myFrame.setEnabled(false);
-		}
-		
-		if (arg == "SLIMEPIT") {
-			gameEventsLabel.setText("Have A Nice *Trip*, See You Next *Fall*!!!"); 
+			game.getMap().revealWholeMap();
+			myTextArea.setText(game.getMap().toString());
+			break;
+			
+		case "MISSEDWUMPUS":
+			gameEventsLabel.setText("I used to be a hunter...then I took an arrow to the knee!!!"); 
 			gameEventsLabel.setForeground(Color.RED);
 			myFrame.setEnabled(false);
-		}
+			game.getMap().revealWholeMap();
+			myTextArea.setText(game.getMap().toString());
+			break;		
+						
+		case "HITWUMPUS":
+			gameEventsLabel.setText("He Shoots...He Scores!!! YOU WIN!!!"); 
+			gameEventsLabel.setForeground(Color.BLUE);
+			myFrame.setEnabled(false);
+			game.getMap().revealWholeMap();
+			myTextArea.setText(game.getMap().toString());
+			break;									
+						
+		case "SLIMEPIT":
+			gameEventsLabel.setText("Have A Nice *Trip*, See You Next *Fall* !!!"); 
+			gameEventsLabel.setForeground(Color.RED);
+			myFrame.setEnabled(false);
+			game.getMap().revealWholeMap();
+			myTextArea.setText(game.getMap().toString());
+			break;											
 		
-		
-		if (arg == "SLIME") {
+		case "SLIME":
 			gameEventsLabel.setText("Hey??? Who put Slimer in this game?!?"); 
 			gameEventsLabel.setForeground(Color.GREEN);
-		}
-		
-		if (arg == "BLOOD") {
+			break;		
+						
+		case "BLOOD":
 			gameEventsLabel.setText("Eww!!! Blood! Yuck!!!"); 
 			gameEventsLabel.setForeground(Color.RED);
-		}	
-		
-		if (arg == "GOOP") {
+			break;		
+						
+		case "GOOP":
 			gameEventsLabel.setText("Slime? Gross! Blood? Gross! Both? Super Gross!!!"); 
 			gameEventsLabel.setForeground(Color.ORANGE);
-		}
-		
-		
+			break;									
+
+		default:
+			gameEventsLabel.setText("You cautiously make a quiet move to the next room..."); 
+			gameEventsLabel.setForeground(Color.WHITE);
+			break;
+		};
 	}
-	
-
-
 }
+

@@ -252,6 +252,17 @@ public class Map {
 		return mapAsString;
 	}
 	
+	public void revealWholeMap(){
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				matrix[i][j].visit();
+			}
+		}
+		
+		
+
+	}
+	
 	public class MapMessenger extends Observable {
 		
 		String message;

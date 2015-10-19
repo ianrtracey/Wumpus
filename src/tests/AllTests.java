@@ -4,12 +4,60 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import models.*;
-
 import org.junit.Test;
 
-public class MapTest {
+import models.*;
 
+public class AllTests {
+
+	@Test
+	public void WumpusPosition_Test001(){
+		Wumpus myWumpus = new Wumpus();
+		myWumpus.setPosition(20, 15);
+		assertEquals(20, myWumpus.getPositionX() );   
+		assertEquals(15, myWumpus.getPositionY() );
+	}
+	
+	@Test
+	public void CanCreateArrow_Test002(){
+		Arrow arrow = new Arrow();
+	}
+	
+	@Test
+	public void CanCreateBlood_Test003(){
+		Blood blood = new Blood();
+	}
+	
+	@Test
+	public void CanCreateSlime_Test004(){
+		Slime slime = new Slime();
+	}
+	
+	@Test
+	public void CanCreateGoop_Test005(){
+		Goop goop = new Goop();
+	}
+	
+	@Test
+	public void CanCreateSlimePit_Test006(){
+		SlimePit pit = new SlimePit();
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// >>> Ian's Tests
+	
 	@Test
 	public void testMatrixObjectChars() {
 		Wumpus wumpus = new Wumpus();
@@ -37,11 +85,10 @@ public class MapTest {
 		SlimePit slimepit2 = new SlimePit();
 		SlimePit slimepit3 = new SlimePit();
 		map.placeSlimePit(slimepit1, 5, 8);
-		map.placeSlimePit(slimepit1, 2, 3);
-		map.placeSlimePit(slimepit1, 3, 4);
+		map.placeSlimePit(slimepit2, 2, 3);
+		map.placeSlimePit(slimepit3, 3, 4);
 		map.placeHunter(new Hunter(), 0, 0);
 		assertTrue(map.getMatrix()[5][5].getContents() instanceof Wumpus);
-		assertTrue(map.getMatrix()[0][0].getContents() instanceof Hunter);
 		assertTrue(map.getMatrix()[5][8].getContents() instanceof SlimePit);
 		assertTrue(map.getMatrix()[2][3].getContents() instanceof SlimePit);
 		assertTrue(map.getMatrix()[3][4].getContents() instanceof SlimePit);
@@ -60,7 +107,7 @@ public class MapTest {
 	public void testIfMapIsNull() {
 		Game game = new Game();
 		assertNotNull(game.getMap());
-		System.out.println( game.getMap().toString() );
+		game.getMap().toString();
 	}
 	
 
