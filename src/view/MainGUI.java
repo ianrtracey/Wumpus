@@ -228,8 +228,10 @@ public class MainGUI implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (arg == "DEAD") {
-			System.out.println("YOLO");
+			gameEventsLabel.setText((String)arg);
 		}
+		
+		gameEventsLabel.setText((String)arg);
 		System.out.println(arg);
 		myTextArea.setText(game.getMap().toString());
 		myGraphicsView.repaint();
