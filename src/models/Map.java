@@ -29,7 +29,12 @@ public class Map {
 	}
 	
 	public Map() {
-		this.matrix    = new Room[XSIZE][YSIZE];
+		this.matrix = new Room[XSIZE][YSIZE];
+		for(int r = 0; r < XSIZE; r++) {
+			for(int c = 0; c < YSIZE; c++) {
+				this.matrix[r][c] = new Room(null);
+			}
+		}
 	}
 	
 	public int getXSize() {

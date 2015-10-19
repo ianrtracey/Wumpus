@@ -110,5 +110,10 @@ public class AllTests {
 		game.getMap().toString();
 	}
 	
+	@Test
+	public void testSlimePitHazard() {
+		
+	}
+	
 
 }
