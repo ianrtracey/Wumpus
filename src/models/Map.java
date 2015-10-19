@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-public class Map extends Observable {
+public class Map {
 	
 	final int XSIZE = 10;
 	final int YSIZE = 10;
@@ -14,6 +14,7 @@ public class Map extends Observable {
 	
 	Wumpus wumpus;
 	Hunter hunter;
+	MapMessenger messenger = new MapMessenger();
 	
 	public Map(Wumpus wumpus, ArrayList<SlimePit> slimePits, Hunter hunter) {
 		this.matrix    = new Room[XSIZE][YSIZE];
@@ -123,6 +124,11 @@ public class Map extends Observable {
 		int y = wumpusPosition[1];
 		int k = 0;
 		
+		if(x+1 < XSIZE && y+1 < YSIZE) {matrix[x+1][y+1] = new Room(new Blood()); }
+		if(x+1 < XSIZE && y-1 > 0) { matrix[x+1][y-1] = new Room(new Blood()); }
+		if(x-1 > 0 && y+1 < YSIZE) { matrix[x-1][y+1]   = new Room(new Blood()); }
+		if(x-1 > 0 && y-1 > 0)matrix[x-1][y-1] = new Room(new Blood());
+		
 		while(x < XSIZE-1 && k < 2) {
 			matrix[++x][y] = new Room(new Blood());
 			k++;
@@ -219,9 +225,12 @@ public class Map extends Observable {
 	}
 	
 	public void changed() {
-		System.out.println("changed");
-		setChanged();
-		notifyObservers(this);
+		messenger.send("Change");
+		
+	}
+	
+	public MapMessenger getMapMessenger() {
+		return this.messenger;
 	}
 	
 	public String toString() {
@@ -242,14 +251,21 @@ public class Map extends Observable {
 		}
 		return mapAsString;
 	}
-
 	
-	// randomly generate Wumpus
-	// 3-5 bottomless slime pits
-	// randomly generated hunter position (except not
-	// generated on top of any hazards
-	// needs wrap-around
-	// needs to know if room is visited or unvisited
+	public class MapMessenger extends Observable {
+		
+		String message;
+		
+		public MapMessenger() {}
+		
+		public void send(String message) {
+		this.message = message;
+		setChanged();
+		notifyObservers(message);
+		}
+		
+		
+	}
 	
 	
 

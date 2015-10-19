@@ -184,6 +184,7 @@ public class ButtonListenerFactory {
 					  game.getHunter().getPositionY()) ){
 			System.out.println("wumpus hit!");
 			} else {
+			;
 			System.out.println("you're dead!");
 			}	
 		}
@@ -193,6 +194,7 @@ public class ButtonListenerFactory {
 					  game.getHunter().getPositionY()+incrementValue) ){
 			System.out.println("wumpus hit!");
 			} else {
+			map.getMapMessenger().send("DEAD");
 			System.out.println("you're dead!");
 			}	
 		}

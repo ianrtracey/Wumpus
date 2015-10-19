@@ -35,7 +35,8 @@ public class MainGUI implements Observer {
 		Game game = new Game();
 		
 		MainGUI myGUI = new MainGUI(game); // Create an instance
-		game.getMap().addObserver(myGUI);
+		game.getMap().getMapMessenger().addObserver(myGUI);
+		
 	}
 	
 	// ------------------------------------------|
@@ -217,11 +218,19 @@ public class MainGUI implements Observer {
 		fireRightButton.addActionListener(blFactory.createRightFireArrowListener());
 		fireDownButton.addActionListener(blFactory.createDownFireArrowListener());
 		
+
+		
+
+		
 				
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if (arg == "DEAD") {
+			System.out.println("YOLO");
+		}
+		System.out.println(arg);
 		myTextArea.setText(game.getMap().toString());
 		myGraphicsView.repaint();
 		

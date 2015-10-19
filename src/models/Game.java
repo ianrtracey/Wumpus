@@ -1,14 +1,16 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Random;
 
-public class Game {
+public class Game extends Observable {
 	
 	Wumpus wumpus;
 	Hunter hunter;
 	ArrayList<SlimePit> slimePits = new ArrayList<SlimePit>();
 	Map map;
+	Boolean status;
 	
 	
 	public Game() {
@@ -17,6 +19,12 @@ public class Game {
 	
 	public Map getMap() {
 		return this.map;
+	}
+	
+	public void changeStatus(){
+		this.status = false;
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	public Wumpus getWumpus() {
