@@ -10,6 +10,7 @@ import java.util.Observer;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -217,7 +218,10 @@ public class MainGUI implements Observer {
 		fireUpButton.addActionListener(blFactory.createUpFireArrowListener());
 		fireLeftButton.addActionListener(blFactory.createLeftFireArrowListener());
 		fireRightButton.addActionListener(blFactory.createRightFireArrowListener());
-		fireDownButton.addActionListener(blFactory.createDownFireArrowListener());			
+
+		fireDownButton.addActionListener(blFactory.createDownFireArrowListener());
+
+
 	}
 
 	@Override
@@ -236,6 +240,7 @@ public class MainGUI implements Observer {
 			gameEventsLabel.setText("Sorry Dude...You got wacked by the Wumpus!!!"); 
 			gameEventsLabel.setForeground(Color.RED);
 			myFrame.setEnabled(false);
+
 			game.getMap().revealWholeMap();
 			myTextArea.setText(game.getMap().toString());
 			break;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
-public class Game extends Observable {
+public class Game {
 	
 	Wumpus wumpus;
 	Hunter hunter;
@@ -21,11 +21,7 @@ public class Game extends Observable {
 		return this.map;
 	}
 	
-	public void changeStatus(){
-		this.status = false;
-		setChanged();
-		notifyObservers(this);
-	}
+
 	
 	public Wumpus getWumpus() {
 		return wumpus;
@@ -50,12 +46,43 @@ public class Game extends Observable {
 		
 	}
 	
-	public boolean determineHitOnWumpus(int arrowX, int arrowY) {
-		if (map.getMatrix()[arrowX][arrowY].getContents() instanceof Wumpus) {
-			return true;
+	public boolean determineHitOnWumpus(int startingX, int startingY, int incrementX, int incrementY) {
+		
+		int[] incPosition = wrapAroundPositionIncrement(startingX, startingY, incrementX, incrementY);
+		System.out.println("starting inc :" + incPosition[0] + " " + incPosition[1]);
+		while (startingX != incPosition[0] || startingY != incPosition[1]) {
+			System.out.println("looping inc :" + incPosition[0] + " " + incPosition[1]);
+			if (map.getMatrix()[incPosition[0]][incPosition[1]].getContents() instanceof Wumpus) {
+				return true;
+			}
+			incPosition = wrapAroundPositionIncrement(incPosition[0], incPosition[1], incrementX, incrementY);
 		}
+		
 		return false;
+
 	}
+	
+	private int[] wrapAroundPositionIncrement(int currentX, int currentY, int incX, int incY) {
+		int safePositionX, safePositionY;
+		int[] position;
+		
+		if (currentX+incX < 0) {
+			safePositionX = map.getXSize()-1;
+		} else {
+		safePositionX = (currentX+incX) % map.getXSize();
+		}
+		
+		if (currentY+incY < 0) {
+			safePositionY = map.getYSize()-1;
+		} else {
+		safePositionY = (currentY+incY) % map.getYSize();
+		}
+		
+		position = new int[] {safePositionX, safePositionY};
+		return position;
+		
+	}
+	
 	
 	public Object hazardExistsInRoom(int x, int y) {
 		

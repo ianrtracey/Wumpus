@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import View.MainGUI;
 import models.*;
 
 public class AllTests {
@@ -19,28 +20,55 @@ public class AllTests {
 	}
 	
 	@Test
-	public void CanCreateArrow_Test002(){
-		Arrow arrow = new Arrow();
+	public void HunterHasArrow(){
+		Hunter hunter = new Hunter();
+		assertTrue(hunter.fire());
+		assertFalse(hunter.fire());
+	}
+	
+	@Test 
+	public void testingRoomVisit() {
+		Room room = new Room(null);
+		assertFalse(room.isVisited());
+		room.visit();
+		assertTrue(room.isVisited());
 	}
 	
 	@Test
-	public void CanCreateBlood_Test003(){
+	public void CanPutBloodInRoow(){
 		Blood blood = new Blood();
+		Room room = new Room(blood);
+		assertNotNull(room);
+		assertTrue(room.getContents() instanceof Blood);
+		
 	}
 	
 	@Test
-	public void CanCreateSlime_Test004(){
+	public void CanPutSlimeInRoom(){
 		Slime slime = new Slime();
+		Room room = new Room(slime);
+		assertTrue(room.getContents() instanceof Slime);
 	}
 	
 	@Test
-	public void CanCreateGoop_Test005(){
+	public void CanPutGoopInRoom(){
 		Goop goop = new Goop();
+		Room room = new Room(goop);
+		assertTrue(room.getContents() instanceof Goop);
 	}
 	
 	@Test
-	public void CanCreateSlimePit_Test006(){
+	public void CanPutSlimePitInRoom(){
 		SlimePit pit = new SlimePit();
+		Room room = new Room(pit);
+		assertTrue(room.getContents() instanceof SlimePit);
+	}
+	
+	@Test
+	public void testGameListener() {
+		Game game = new Game();
+		MainGUI gui = new MainGUI(game);
+		game.changeStatus();
 	}
 
 	
@@ -54,9 +82,6 @@ public class AllTests {
 	
 	
 	
-	
-	
-	// >>> Ian's Tests
 	
 	@Test
 	public void testMatrixObjectChars() {
@@ -108,6 +133,11 @@ public class AllTests {
 		Game game = new Game();
 		assertNotNull(game.getMap());
 		game.getMap().toString();
+	}
+	
+	@Test
+	public void testSlimePitHazard() {
+		
 	}
 	
 
