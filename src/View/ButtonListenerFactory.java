@@ -171,11 +171,11 @@ public class ButtonListenerFactory {
 		}
 		
 		private void fireInXDirection(int incrementValue) {
-			handleFireMessage(1,0);
+			handleFireMessage(incrementValue,0);
 		}
 		
-		private void fireInYDirection(int incrementXValue) {
-			handleFireMessage(0,1);
+		private void fireInYDirection(int incrementValue) {
+			handleFireMessage(0,incrementValue);
 		}
 		
 		private void handleMovementMessage() {
@@ -202,10 +202,12 @@ public class ButtonListenerFactory {
 		
 		private void handleFireMessage(int incrementX, int incrementY) {
 			
-			if(game.getHunter().fire() && game.determineHitOnWumpus(game.getHunter().getPositionX()+incrementX,
-					  game.getHunter().getPositionY()+incrementY) ){
+			if(game.getHunter().fire() && game.determineHitOnWumpus(map.getHunter().getPositionX(),
+																	map.getHunter().getPositionY(),
+																	incrementX, incrementY) ){
 				
 				map.getMapMessenger().send("HITWUMPUS");
+				
 			} else {
 				
 				map.getMapMessenger().send("MISSEDWUMPUS");

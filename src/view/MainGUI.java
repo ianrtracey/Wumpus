@@ -217,12 +217,7 @@ public class MainGUI implements Observer {
 		fireLeftButton.addActionListener(blFactory.createLeftFireArrowListener());
 		fireRightButton.addActionListener(blFactory.createRightFireArrowListener());
 		fireDownButton.addActionListener(blFactory.createDownFireArrowListener());
-		
 
-		
-
-		
-				
 	}
 
 	@Override

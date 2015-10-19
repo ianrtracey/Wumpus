@@ -41,7 +41,6 @@ public class MapTest {
 		map.placeSlimePit(slimepit1, 3, 4);
 		map.placeHunter(new Hunter(), 0, 0);
 		assertTrue(map.getMatrix()[5][5].getContents() instanceof Wumpus);
-		assertTrue(map.getMatrix()[0][0].getContents() instanceof Hunter);
 		assertTrue(map.getMatrix()[5][8].getContents() instanceof SlimePit);
 		assertTrue(map.getMatrix()[2][3].getContents() instanceof SlimePit);
 		assertTrue(map.getMatrix()[3][4].getContents() instanceof SlimePit);
@@ -61,6 +60,11 @@ public class MapTest {
 		Game game = new Game();
 		assertNotNull(game.getMap());
 		System.out.println( game.getMap().toString() );
+	}
+	
+	@Test
+	public void testSlimePitHazard() {
+		
 	}
 	
 
