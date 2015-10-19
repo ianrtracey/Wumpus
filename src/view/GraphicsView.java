@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import models.Map;
 import models.Room;
 
-public class GraphicsView extends JPanel implements Observer{
+public class GraphicsView extends JPanel{
 	// using a IMG prefix and caps here like pretend constants just because...
 	private Image IMG_GOOP;
 	private Image IMG_BLOOD;
@@ -77,8 +77,8 @@ public class GraphicsView extends JPanel implements Observer{
 		    	  if(gameMap.objectSymbol(gameState[curRow][curCol].getContents()) == 'P'){g2.drawImage(IMG_PIT,   r, c, null);}	    	  
 		    	  
 		    	  // Finally: Actors	    	  
-		    	  if(gameMap.objectSymbol(gameState[curRow][curCol].getContents()) == 'O'){g2.drawImage(IMG_PLAYLINK, r, c, null);}
-		    	  if(gameMap.objectSymbol(gameState[curRow][curCol].getContents()) == 'W'){g2.drawImage(IMG_LEST  , r, c, null);} //   <------ MCCANN EASTER EGG - DELETE THIS BEFORE SUBMIT
+		    	  if(gameState[curRow][curCol].getHunter() != null){g2.drawImage(IMG_PLAYER, r, c, null);}
+		    	  if(gameMap.objectSymbol(gameState[curRow][curCol].getContents()) == 'W'){g2.drawImage(IMG_CACO  , r, c, null);} //   <------ MCCANN EASTER EGG - DELETE THIS BEFORE SUBMIT
 		    	  //if(gameMap.objectSymbol(gameState[curRow][curCol].getContents()) == 'W'){g2.drawImage(IMG_WUMPUS, r, c, null);} // <------ THIS IS THE REAL ONE 	  
 	    	  }   
 	    	  curCol++;
@@ -86,9 +86,4 @@ public class GraphicsView extends JPanel implements Observer{
 	    curRow++;
 	  }
 	} // Ends Method paintComponent
-
-	@Override
-	public void update(Observable o, Object arg) {
-		this.repaint();
-	}
 } // Ends Class GraphicsView

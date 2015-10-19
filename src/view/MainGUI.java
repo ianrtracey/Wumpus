@@ -33,9 +33,9 @@ public class MainGUI implements Observer {
 	// ------------------------------------------|
 	public static void main(String[] args) {
 		Game game = new Game();
+		
 		MainGUI myGUI = new MainGUI(game); // Create an instance
 		game.getMap().addObserver(myGUI);
-		
 	}
 	
 	// ------------------------------------------|
@@ -223,6 +223,7 @@ public class MainGUI implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		myTextArea.setText(game.getMap().toString());
+		myGraphicsView.repaint();
 		
 	}
 	
