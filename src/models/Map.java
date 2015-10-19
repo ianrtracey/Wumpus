@@ -22,10 +22,13 @@ public class Map {
 		this.wumpus = wumpus;
 		this.hunter = hunter;
 		
+
+		placeWumpus(wumpus);
 		placeSlimePits(slimePits);
 		placeHunter(hunter);
 		placeRooms();
-		placeWumpus(wumpus);
+		
+	
 	}
 	
 	public Map() {
@@ -51,8 +54,9 @@ public class Map {
 	
 	private void placeWumpus(Wumpus wumpus) {
 		int [] wumpusPosition = placeInRandomPosition(wumpus);
-		wumpus.setPosition(wumpusPosition[0], wumpusPosition[1]);
 		placeBlood(wumpusPosition);	
+		wumpus.setPosition(wumpusPosition[0], wumpusPosition[1]);
+
 	}
 	
 	public void placeWumpus(Wumpus wumpus, int x, int y) {
@@ -101,26 +105,36 @@ public class Map {
 	private void placeSlime(int[] slimePitPosition) {
 		int x = slimePitPosition[0];
 		int y = slimePitPosition[1];
+		
 		if (x < XSIZE-1) {
-			placeSlimeOrGoop(x+1, y);
+			placeSlimeOrGoop(x+1, y, 's');
 		}
 		if (0 < x) {
-			placeSlimeOrGoop(x-1, y);
+			placeSlimeOrGoop(x-1, y, 's');
 		}
 		
 		if (y < YSIZE-1) {
-			placeSlimeOrGoop(x, y+1);
+			placeSlimeOrGoop(x, y+1, 's');
 		}
 		if (0 < y) {
-			placeSlimeOrGoop(x, y-1);
+			placeSlimeOrGoop(x, y-1, 's');
 		}
 	}
 	
-	private void placeSlimeOrGoop(int x, int y) {
-		if (matrix[x][y] != null && matrix[x][y].getContents() instanceof Blood ) {
+	private void placeSlimeOrGoop(int x, int y, char type) {
+		
+		if(matrix[x][y] != null && 
+				matrix[x][y].getContents() !=null &&
+				(matrix[x][y].getContents() instanceof Wumpus || matrix[x][y].getContents() instanceof SlimePit)
+				){
+	    } else if (matrix[x][y] != null && type == 's' && matrix[x][y].getContents() instanceof Blood ) {
 			matrix[x][y] = new Room(new Goop());
-		} else {
+		} else if (matrix[x][y] != null && type == 'b' && matrix[x][y].getContents() instanceof Slime ) {
+				 matrix[x][y] = new Room(new Goop());
+		} else if (type=='s') {
 			matrix[x][y] = new Room(new Slime());
+		} else if (type=='b') {
+			matrix[x][y] = new Room(new Blood());
 		}
 	}
 	
@@ -128,21 +142,21 @@ public class Map {
 		int x = wumpusPosition[0];
 		int y = wumpusPosition[1];
 		int k = 0;
-		
-		if(x+1 < XSIZE && y+1 < YSIZE) {matrix[x+1][y+1] = new Room(new Blood()); }
-		if(x+1 < XSIZE && y-1 > 0) { matrix[x+1][y-1] = new Room(new Blood()); }
-		if(x-1 > 0 && y+1 < YSIZE) { matrix[x-1][y+1]   = new Room(new Blood()); }
-		if(x-1 > 0 && y-1 > 0)matrix[x-1][y-1] = new Room(new Blood());
+			
+		if(x+1 < XSIZE && y+1 < YSIZE) {placeSlimeOrGoop(x+1, y+1, 'b');}
+		if(x+1 < XSIZE && y-1 > 0)     {placeSlimeOrGoop(x+1, y-1, 'b');}
+		if(x-1 > 0 && y+1 < YSIZE)     {placeSlimeOrGoop(x-1, y+1, 'b');}
+		if(x-1 > 0 && y-1 > 0)         {placeSlimeOrGoop(x-1, y-1, 'b');}
 		
 		while(x < XSIZE-1 && k < 2) {
-			matrix[++x][y] = new Room(new Blood());
+			placeSlimeOrGoop(++x, y, 'b');
 			k++;
 		}
 		k = 0;
 		x = wumpusPosition[0];
 		
 		while(0 < x && k < 2) {
-			matrix[--x][y] = new Room(new Blood());
+			placeSlimeOrGoop(--x, y, 'b');
 			k++;
 		}
 		
@@ -150,7 +164,7 @@ public class Map {
 		x = wumpusPosition[0];
 		
 		while(y < YSIZE-1 && k < 2) {
-			matrix[x][++y] = new Room( new Blood());
+			placeSlimeOrGoop(x, ++y, 'b');
 			k++;
 		}
 		
@@ -158,9 +172,16 @@ public class Map {
 		y = wumpusPosition[1];
 		
 		while(0 < y && k < 2) {
-			matrix[x][--y] = new Room(new Blood());
+			placeSlimeOrGoop(x, --y, 'b');;
 			k++;
 		}
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	public void placeRooms() {
@@ -175,9 +196,8 @@ public class Map {
 	
 	private int[] placeInRandomPosition(Object obj) {
 		int[] coordinates = getRandomPosition();
+	
 		matrix[coordinates[0]][coordinates[1]] = new Room(obj);
-		
-		//System.out.println("Placed: " + obj.getClass() + " in " + coordinates[0] + " " + coordinates[1]);
 		return coordinates;
 	}
 	
@@ -190,8 +210,6 @@ public class Map {
 		coordinates[1] = randomY;
 		return coordinates;
 	}
-	
-
 	
 	public char objectSymbol(Object obj) {
 		if(obj instanceof Wumpus){return 'W'; }

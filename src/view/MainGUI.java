@@ -239,8 +239,7 @@ public class MainGUI implements Observer {
 		case "WUMPUS": 	
 			gameEventsLabel.setText("Sorry Dude...You got wacked by the Wumpus!!!"); 
 			gameEventsLabel.setForeground(Color.RED);
-			myFrame.setEnabled(false);
-
+			this.lockPanes();
 			game.getMap().revealWholeMap();
 			myTextArea.setText(game.getMap().toString());
 			break;
@@ -248,7 +247,7 @@ public class MainGUI implements Observer {
 		case "MISSEDWUMPUS":
 			gameEventsLabel.setText("I used to be a hunter...then I took an arrow to the knee!!!"); 
 			gameEventsLabel.setForeground(Color.RED);
-			myFrame.setEnabled(false);
+			this.lockPanes();
 			game.getMap().revealWholeMap();
 			myTextArea.setText(game.getMap().toString());
 			break;		
@@ -256,7 +255,7 @@ public class MainGUI implements Observer {
 		case "HITWUMPUS":
 			gameEventsLabel.setText("He Shoots...He Scores!!! YOU WIN!!!"); 
 			gameEventsLabel.setForeground(Color.BLUE);
-			myFrame.setEnabled(false);
+			this.lockPanes();
 			game.getMap().revealWholeMap();
 			myTextArea.setText(game.getMap().toString());
 			break;									
@@ -264,7 +263,7 @@ public class MainGUI implements Observer {
 		case "SLIMEPIT":
 			gameEventsLabel.setText("Have A Nice *Trip*, See You Next *Fall* !!!"); 
 			gameEventsLabel.setForeground(Color.RED);
-			myFrame.setEnabled(false);
+			this.lockPanes();
 			game.getMap().revealWholeMap();
 			myTextArea.setText(game.getMap().toString());
 			break;											
@@ -290,5 +289,20 @@ public class MainGUI implements Observer {
 			break;
 		};
 	}
+	
+	private void lockPanes(){
+		moveUpButton.setEnabled(false);
+		moveDownButton.setEnabled(false);
+		moveLeftButton.setEnabled(false);
+		moveRightButton.setEnabled(false);
+		fireUpButton.setEnabled(false);
+		fireDownButton.setEnabled(false);
+		fireLeftButton.setEnabled(false);
+		fireRightButton.setEnabled(false);
+	}
+	
+	
+	
+	
 }
 
