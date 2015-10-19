@@ -156,7 +156,8 @@ public class MainGUI implements Observer {
 		// Add in the game status text panel
 		gameEventsLabel = new JLabel("Welcome to Ian and Steve's Hunt the Wumpus!");
 		gameEventsLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		fireLabel.setForeground(Color.BLUE);
+		gameEventsLabel.setForeground(Color.WHITE);
+		gameEventsContainer.setBackground(Color.BLACK);
 		gameEventsContainer.add(gameEventsLabel);
 		
 		// Set up the JTabbedPanel
@@ -227,14 +228,41 @@ public class MainGUI implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg == "DEAD") {
-			gameEventsLabel.setText((String)arg);
+
+		gameEventsLabel.setText((String)arg);         // This will update GameEventsLabel
+		myTextArea.setText(game.getMap().toString()); // This will update the Text View
+		myGraphicsView.repaint();                     // This will update the Graphics
+		
+		
+		
+		if (arg == "WUMPUS") {
+			gameEventsLabel.setText("Sorry Dude...You got wacked by the Wumpus!!!"); 
+			gameEventsLabel.setForeground(Color.RED);
+			myFrame.setEnabled(false);
 		}
 		
-		gameEventsLabel.setText((String)arg);
-		System.out.println(arg);
-		myTextArea.setText(game.getMap().toString());
-		myGraphicsView.repaint();
+		if (arg == "SLIMEPIT") {
+			gameEventsLabel.setText("Have A Nice *Trip*, See You Next *Fall*!!!"); 
+			gameEventsLabel.setForeground(Color.RED);
+			myFrame.setEnabled(false);
+		}
+		
+		
+		if (arg == "SLIME") {
+			gameEventsLabel.setText("Hey??? Who put Slimer in this game?!?"); 
+			gameEventsLabel.setForeground(Color.GREEN);
+		}
+		
+		if (arg == "BLOOD") {
+			gameEventsLabel.setText("Eww!!! Blood! Yuck!!!"); 
+			gameEventsLabel.setForeground(Color.RED);
+		}	
+		
+		if (arg == "GOOP") {
+			gameEventsLabel.setText("Slime? Gross! Blood? Gross! Both? Super Gross!!!"); 
+			gameEventsLabel.setForeground(Color.ORANGE);
+		}
+		
 		
 	}
 	

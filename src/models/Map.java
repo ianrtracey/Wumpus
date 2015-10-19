@@ -22,10 +22,10 @@ public class Map {
 		this.wumpus = wumpus;
 		this.hunter = hunter;
 		
-		placeWumpus(wumpus);
 		placeSlimePits(slimePits);
 		placeHunter(hunter);
 		placeRooms();
+		placeWumpus(wumpus);
 	}
 	
 	public Map() {
@@ -259,14 +259,9 @@ public class Map {
 		public MapMessenger() {}
 		
 		public void send(String message) {
-		this.message = message;
-		setChanged();
-		notifyObservers(message);
+			this.message = message;
+			setChanged();
+			notifyObservers(message);
 		}
-		
-		
 	}
-	
-	
-
 }
