@@ -57,16 +57,16 @@ public class Game extends Observable {
 		return false;
 	}
 	
-	public boolean hazardExistsInRoom(int x, int y) {
+	public Object hazardExistsInRoom(int x, int y) {
 		
 		if(map.getMatrix()[x][y].getContents() instanceof SlimePit) {
-			return true;
+			return map.getMatrix()[x][y].getContents();
 		}
 		if (map.getMatrix()[x][y].getContents() instanceof Wumpus) {
-			return true;
+			return map.getMatrix()[x][y].getContents();
 		}
 		
-		return false;
+		return null;
 	}
 	
 	// generate 3-5 random slime pits

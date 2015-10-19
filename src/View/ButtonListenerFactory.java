@@ -148,8 +148,7 @@ public class ButtonListenerFactory {
 			nextRoom.visit();
 			nextRoom.setHunter(hunter);
 			map.changed();
-			System.out.println("Hunter: " + map.getHunter().getPositionX() + " " +
-											map.getHunter().getPositionY());
+			
 
 			
 		}
